@@ -4,19 +4,40 @@ import { autoLoginPartialRoutesGuard } from 'angular-auth-oidc-client';
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./features/public/public.routes').then((m) => m.PUBLIC_ROUTES),
+    loadChildren: () => import('./features/marketing/public.routes').then((m) => m.PUBLIC_ROUTES),
   },
   {
-    path: 'dashboard',
+    path: 'app',
     canActivate: [autoLoginPartialRoutesGuard],
-    loadComponent: () =>
-      import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+    children: [
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+      },
+      {
+        path: 'editor',
+        loadComponent: () =>
+          import('./features/editor/editor.component').then((m) => m.EditorComponent),
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./features/profile/profile.component').then((m) => m.ProfileComponent),
+      },
+    ],
   },
   {
-    path: 'editor',
-    canActivate: [autoLoginPartialRoutesGuard],
+    path: 'unauthorized',
     loadComponent: () =>
-      import('./features/editor/editor.component').then((m) => m.EditorComponent),
+      import('./features/auth/unauthorized/unauthorized.component').then(
+        (m) => m.UnauthorizedComponent,
+      ),
+  },
+  {
+    path: 'forbidden',
+    loadComponent: () =>
+      import('./features/auth/forbidden/forbidden.component').then((m) => m.ForbiddenComponent),
   },
   {
     path: 'auth',

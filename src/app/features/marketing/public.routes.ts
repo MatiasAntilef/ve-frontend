@@ -17,8 +17,9 @@ export const PUBLIC_ROUTES: Routes = [
         loadComponent: () => import('./pricing/pricing.component').then((m) => m.PricingComponent),
       },
       {
-        path: 'about',
-        loadComponent: () => import('./about/about.component').then((m) => m.AboutComponent),
+        path: 'services',
+        loadComponent: () =>
+          import('./services/services.component').then((m) => m.ServicesComponent),
       },
       {
         path: 'contact',

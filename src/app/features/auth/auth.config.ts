@@ -1,5 +1,6 @@
 import { PassedInitialConfig } from 'angular-auth-oidc-client';
-import { environment } from '../../../environments/environment';
+import { environment } from '@environments/environment.development';
+
 export const authConfig: PassedInitialConfig = {
   config: {
     authority: environment.auth.authority,

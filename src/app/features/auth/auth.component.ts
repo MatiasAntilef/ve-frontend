@@ -18,14 +18,10 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
     this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData }) => {
+      console.log('isAuthenticated: ', isAuthenticated, 'userData: ', userData);
       this.isAuthenticated = isAuthenticated;
       this.userData = userData;
-      console.log('isAuthenticated', isAuthenticated);
-      console.log('userData', userData);
-
-      // if (isAuthenticated) {
-      //   this.router.navigateByUrl('/dashboard');
-      // }
+      console.log('isAuthenticated: ', isAuthenticated, 'userData: ', userData);
     });
   }
 

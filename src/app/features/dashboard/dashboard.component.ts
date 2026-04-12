@@ -11,6 +11,6 @@ export class DashboardComponent {
   private readonly oidcSecurityService = inject(OidcSecurityService);
 
   logout() {
-    this.oidcSecurityService.logoff().subscribe();
+    this.oidcSecurityService.logoff().subscribe((result) => console.log(result));
   }
 }
