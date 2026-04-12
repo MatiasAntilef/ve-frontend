@@ -1,0 +1,14 @@
+<section>
+  <h2>Authentication</h2>
+
+  @if (isAuthenticated) {
+    <p>Session active.</p>
+    <button type="button" (click)="logout()">Logout</button>
+  } @else {
+    <p>You are not logged in.</p>
+    <button type="button" (click)="login()">Login</button>
+  }
+
+  <h3>User data</h3>
+  <pre>{{ userData | json }}</pre>
+</section>
