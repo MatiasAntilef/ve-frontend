@@ -17,13 +17,13 @@ export const PUBLIC_ROUTES: Routes = [
         loadComponent: () => import('./pricing/pricing.component').then((m) => m.PricingComponent),
       },
       {
+        path: 'contact',
+        loadComponent: () => import('./contact/contact.component').then((m) => m.ContactComponent),
+      },
+      {
         path: 'services',
         loadComponent: () =>
           import('./services/services.component').then((m) => m.ServicesComponent),
-      },
-      {
-        path: 'contact',
-        loadComponent: () => import('./contact/contact.component').then((m) => m.ContactComponent),
       },
     ],
   },

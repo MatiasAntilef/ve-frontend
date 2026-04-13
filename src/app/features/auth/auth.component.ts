@@ -1,35 +1,21 @@
-import { JsonPipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { Component } from '@angular/core';
+import { AuthService } from '@core/auth/auth.services';
 
 @Component({
   selector: 'app-auth',
-  imports: [JsonPipe],
+  imports: [],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })
-export class AuthComponent implements OnInit {
-  isAuthenticated = false;
-  userData: unknown = null;
+export class AuthComponent {
+  constructor(private authService: AuthService) {}
 
-  private readonly oidcSecurityService = inject(OidcSecurityService);
-  private readonly router = inject(Router);
-
-  ngOnInit() {
-    this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData }) => {
-      console.log('isAuthenticated: ', isAuthenticated, 'userData: ', userData);
-      this.isAuthenticated = isAuthenticated;
-      this.userData = userData;
-      console.log('isAuthenticated: ', isAuthenticated, 'userData: ', userData);
-    });
+  login(): void {
+    this.authService.login();
   }
 
-  login() {
-    this.oidcSecurityService.authorize();
-  }
-
-  logout() {
-    this.oidcSecurityService.logoff().subscribe((result) => console.log(result));
+  checkAuth(): void {
+    const res = this.authService.checkAuth().subscribe();
+    console.log(res);
   }
 }
