@@ -2,7 +2,7 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { authConfig } from './core/auth/auth.config';
+import { authConfig } from './core/services/auth/auth.config';
 import { provideAuth, withAppInitializerAuthCheck } from 'angular-auth-oidc-client';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
