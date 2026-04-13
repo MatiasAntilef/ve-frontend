@@ -1,28 +1,65 @@
-# name: Build & Deploy
-# on:
-#   push:
-#     branches: [main]
+name: Build & Deploy to S3
 
-# env:
-#   NODE_VERSION: '24'
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#       - uses: actions/setup-node@v3
-#         with:
-#           node-version: ${{ env.NODE_VERSION }}
-#       - run: pnpm install
-#       - run: pnpm run build
+permissions:
+  id-token: write
+  contents: read
 
-#   deploy:
-#     needs: build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#       - name: Deploy to AWS
-#         run: |
-#           # Tu lógica de deploy aquí
-#           # aws s3 sync dist/ s3://tu-bucket/
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Angular
+        run: pnpm run build --configuration=production
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: angular-dist
+          path: dist/
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ secrets.IAM_ROLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: angular-dist
+          path: dist/
+
+      - name: Deploy dist/ to S3
+        env:
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+        run: |
+          aws s3 sync dist/ s3://$S3_BUCKET --delete
