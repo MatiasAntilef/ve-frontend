@@ -59,4 +59,4 @@ jobs:
           path: dist/
 
       - name: Deploy to S3
-        run: aws s3 sync dist/video-editor-frontend s3://${{ secrets.S3_BUCKET }} --delete
+        run: aws s3 sync dist/video-editor-frontend/browser s3://${{ secrets.S3_BUCKET }} --delete
