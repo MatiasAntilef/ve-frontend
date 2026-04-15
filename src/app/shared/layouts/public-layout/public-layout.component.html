@@ -2,16 +2,16 @@
   class="navbar rounded-box flex w-full items-center justify-between gap-2 shadow-base-300/20 shadow-sm"
 >
   <div class="navbar-start max-md:w-1/4">
-    <a class="link text-base-content link-neutral text-xl font-bold no-underline" href="#">
+    <a class="link text-base-content link-neutral text-xl font-bold no-underline" routerLink="/">
       TalkenAI
     </a>
   </div>
   <div class="navbar-center max-md:hidden">
     <ul class="menu menu-horizontal p-0 font-medium">
-      <li><a href="/landing">Inicio</a></li>
-      <li><a href="/contact">Contacto</a></li>
-      <li><a href="/about">Sobre nosotros</a></li>
-      <li><a href="/pricing">Precios</a></li>
+      <li><a routerLink="/landing">Inicio</a></li>
+      <li><a routerLink="/contact">Contacto</a></li>
+      <li><a routerLink="/about">Sobre nosotros</a></li>
+      <li><a routerLink="/pricing">Precios</a></li>
     </ul>
   </div>
   <div class="navbar-end items-center gap-4">
@@ -33,12 +33,12 @@
         aria-orientation="vertical"
         aria-labelledby="dropdown-default"
       >
-        <li><a class="dropdown-item" href="#">Link 1</a></li>
-        <li><a class="dropdown-item" href="#">Link 2</a></li>
-        <li><a class="dropdown-item" href="#">Link 3</a></li>
+        <li><a class="dropdown-item" routerLink="#">Link 1</a></li>
+        <li><a class="dropdown-item" routerLink="#">Link 2</a></li>
+        <li><a class="dropdown-item" routerLink="#">Link 3</a></li>
       </ul>
     </div>
-    <a class="btn max-md:btn-square btn-primary" href="/auth">
+    <a class="btn max-md:btn-square btn-primary" routerLink="/auth">
       <span class="max-md:hidden">Crear cuenta</span>
       <span class="icon-[tabler--arrow-right] rtl:rotate-180"></span>
     </a>
