@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
 
 @Component({
@@ -7,4 +7,14 @@ import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
   templateUrl: './public-layout.component.html',
   styleUrl: './public-layout.component.css',
 })
-export class PublicLayoutComponent {}
+export class PublicLayoutComponent {
+  readonly isMobileMenuOpen = signal(false);
+
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen.update((isOpen) => !isOpen);
+  }
+
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen.set(false);
+  }
+}

@@ -15,28 +15,33 @@
     </ul>
   </div>
   <div class="navbar-end items-center gap-4">
-    <div class="dropdown relative inline-flex md:hidden">
+    <div class="relative md:hidden">
       <button
-        id="dropdown-default"
+        id="mobile-nav-menu"
         type="button"
-        class="dropdown-toggle btn btn-text btn-secondary btn-square"
+        class="btn btn-text btn-secondary btn-square"
         aria-haspopup="menu"
-        aria-expanded="false"
-        aria-label="Dropdown"
+        [attr.aria-expanded]="isMobileMenuOpen()"
+        aria-label="Abrir menu"
+        (click)="toggleMobileMenu()"
       >
-        <span class="icon-[tabler--menu-2] dropdown-open:hidden size-5"></span>
-        <span class="icon-[tabler--x] dropdown-open:block hidden size-5"></span>
+        <span class="icon-[tabler--menu-2] size-5" [class.hidden]="isMobileMenuOpen()"></span>
+        <span class="icon-[tabler--x] size-5" [class.hidden]="!isMobileMenuOpen()"></span>
       </button>
-      <ul
-        class="dropdown-menu dropdown-open:opacity-100 hidden min-w-60"
-        role="menu"
-        aria-orientation="vertical"
-        aria-labelledby="dropdown-default"
-      >
-        <li><a class="dropdown-item" routerLink="#">Link 1</a></li>
-        <li><a class="dropdown-item" routerLink="#">Link 2</a></li>
-        <li><a class="dropdown-item" routerLink="#">Link 3</a></li>
-      </ul>
+
+      @if (isMobileMenuOpen()) {
+        <ul
+          class="menu rounded-box bg-base-100 absolute right-0 top-full z-50 mt-2 min-w-60 border border-base-300 p-2 shadow-lg"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="mobile-nav-menu"
+        >
+          <li><a (click)="closeMobileMenu()" routerLink="/landing">Inicio</a></li>
+          <li><a (click)="closeMobileMenu()" routerLink="/contact">Contacto</a></li>
+          <li><a (click)="closeMobileMenu()" routerLink="/about">Sobre nosotros</a></li>
+          <li><a (click)="closeMobileMenu()" routerLink="/pricing">Precios</a></li>
+        </ul>
+      }
     </div>
     <a class="btn max-md:btn-square btn-primary" routerLink="/auth">
       <span class="max-md:hidden">Crear cuenta</span>
