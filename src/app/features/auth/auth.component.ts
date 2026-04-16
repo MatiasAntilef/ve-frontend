@@ -13,9 +13,4 @@ export class AuthComponent {
   login(): void {
     this.authService.login();
   }
-
-  checkAuth(): void {
-    const res = this.authService.checkAuth().subscribe();
-    console.log(res);
-  }
 }
