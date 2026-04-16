@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { AuthService } from '@core/services/auth/auth.service';
 
@@ -12,6 +13,7 @@ describe('PrivateLayoutComponent', () => {
     await TestBed.configureTestingModule({
       imports: [PrivateLayoutComponent],
       providers: [
+        provideRouter([]),
         {
           provide: AuthService,
           useValue: {
