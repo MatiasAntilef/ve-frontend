@@ -17,6 +17,12 @@ export class AuthService {
   readonly userData = computed(() => this.authState().userData);
   readonly accessToken = computed(() => this.authState().accessToken);
 
+  async getToken(): Promise<string> {
+    let token = '';
+    this.oidcSecurityService.getAccessToken().subscribe((t) => (token = t));
+    return token;
+  }
+
   initAuth(): Observable<LoginResponse> {
     return this.oidcSecurityService.checkAuth().pipe(
       tap(({ isAuthenticated, userData, accessToken }) => {
@@ -33,7 +39,7 @@ export class AuthService {
     this.oidcSecurityService.authorize();
   }
 
-  logout(): Observable<unknown> {
+  logoff(): Observable<unknown> {
     return this.oidcSecurityService.logoff().pipe(
       tap(() => {
         this.authState.set({

@@ -7,4 +7,5 @@ export const environment = {
     clientId: '7alqbt8mef5vu02fs6mo1db7b6',
     scope: 'openid profile email',
   },
+  api: 'https://u6fugn1c4l.execute-api.sa-east-1.amazonaws.com',
 };

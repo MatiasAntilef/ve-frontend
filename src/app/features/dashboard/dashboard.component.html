@@ -1,6 +1,9 @@
 <div class="flex flex-col gap-5">
   <h1>Dashboard</h1>
-  <button type="button" class="btn btn-primary" (click)="logout()">Logout</button>
 
   <input class="file-input" type="file" accept="video/mp4" (change)="onFileSelected($event)" />
+
+  <div>
+    <button (click)="load()">Cargar Videos</button>
+  </div>
 </div>
