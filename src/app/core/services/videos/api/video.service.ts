@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from '@core/services/auth/auth.service';
 import { environment } from '@environments/environment.development';
-import { VideoInterface } from '../interfaces/video.interface';
 import { VideoStateService } from '../state/video-state.service';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { LoadVideosResponse } from '../interfaces/res-video.interface';
+import { VideoDetailInterface } from '../interfaces/video-detail.interface';
+import { ResVideoListInterface } from '../interfaces/video.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -56,14 +56,16 @@ export class VideoService {
     }
   }
 
-  async loadVideos(): Promise<VideoInterface[]> {
-    const res = await firstValueFrom(
-      this.http.get<LoadVideosResponse>(`${environment.api}/videos`),
-    );
-    return res.videos;
+  async loadVideos(): Promise<ResVideoListInterface> {
+    return await firstValueFrom(this.http.get<ResVideoListInterface>('/default.json'));
+    // return await firstValueFrom(
+    //   this.http.get<ResVideoListInterface>(`${environment.api}/videos`),
+    // );
   }
 
-  async getVideo(videoId: string) {
-    return firstValueFrom(this.http.get(`${environment.api}/videos/${videoId}`));
+  async getVideo(videoId: string): Promise<VideoDetailInterface> {
+    return await firstValueFrom(
+      this.http.get<VideoDetailInterface>(`${environment.api}/videos/${videoId}`),
+    );
   }
 }

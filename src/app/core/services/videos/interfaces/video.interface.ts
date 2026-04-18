@@ -1,4 +1,4 @@
-export interface VideoInterface {
+export interface VideoListInterface {
   user_id: string;
   video_name: string;
   created_at: string;
@@ -9,4 +9,8 @@ export interface VideoInterface {
   video_key: string;
   duration: number | null;
   video_id: string;
+}
+
+export interface ResVideoListInterface {
+  videos: VideoListInterface[];
 }

@@ -1,66 +1,78 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NotificationService } from '@core/services/notification/notification.service';
 import { VideoService } from '@core/services/videos/api/video.service';
-
-interface VideoDetail {
-  video_id?: string;
-  video_name?: string;
-  status?: string;
-  transcribe_status?: boolean;
-  created_at?: string;
-  duration?: number | null;
-  videoUrl?: string;
-  video_url?: string;
-  [key: string]: unknown;
-}
+import { VideoDetailInterface } from '@core/services/videos/interfaces/video-detail.interface';
 
 @Component({
   selector: 'app-transcribe',
   imports: [],
   templateUrl: './transcribe.component.html',
-  styleUrl: './transcribe.component.css',
 })
-export class TranscribeComponent implements OnInit {
+export class TranscribeComponent {
+  constructor() {
+    this.loadVideoDetail();
+  }
   private readonly route = inject(ActivatedRoute);
   private readonly videoService = inject(VideoService);
-
+  private notification = inject(NotificationService);
   readonly videoId = this.route.snapshot.paramMap.get('videoId') ?? '';
 
-  isLoading = true;
-  errorMessage = '';
-  videoData: VideoDetail | null = null;
+  error = signal<string | null>(null);
+  isLoading = signal<boolean>(true);
+  videoDetail = signal<VideoDetailInterface | null>(null);
+
+  isTranscribing = signal<boolean>(false);
 
   get resolvedVideoUrl(): string | null {
-    if (!this.videoData) {
+    if (!this.videoDetail()) {
       return null;
     }
 
-    return this.videoData.videoUrl ?? this.videoData.video_url ?? null;
+    return this.videoDetail()!.videoUrl ?? this.videoDetail()!.videoUrl ?? null;
   }
 
-  async ngOnInit(): Promise<void> {
+  async loadVideoDetail(): Promise<void> {
     if (!this.videoId) {
-      this.errorMessage = 'No se encontro videoId en la ruta';
-      this.isLoading = false;
+      this.error.set('No se encontro videoId en la ruta');
+      this.notification.error('No se encontro videoId en la ruta');
+      this.isLoading.set(false);
       return;
     }
 
     try {
-      this.videoData = (await this.videoService.getVideo(this.videoId)) as VideoDetail;
+      const res = await this.videoService.getVideo(this.videoId);
+      this.videoDetail.set(res);
     } catch (error) {
       console.error('Error obteniendo detalle del video', error);
-      this.errorMessage = 'No se pudo cargar el video';
+      this.error.set('No se pudo cargar el video');
+      this.notification.error('No se pudo cargar el video');
     } finally {
-      this.isLoading = false;
+      this.isLoading.set(false);
     }
   }
 
-  formatDate(value: string | undefined): string {
-    if (!value) {
-      return '-';
-    }
+  // onTranscribe() {
+  //   if (!this.videoDetail() || this.isTranscribing()) return;
 
-    const parsed = new Date(value);
-    return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleString();
-  }
+  //   this.isTranscribing.set(true);
+
+  //   // Simulación (reemplaza con tu servicio real)
+  //   this.videoService.transcribeVideo(this.videoDetail()!.videoId).subscribe({
+  //     next: () => {
+  //       // actualizar estado local
+  //       this.videoDetail.update((v) => ({
+  //         ...v!,
+  //         transcribeStatus: true,
+  //       }));
+  //     },
+  //     error: () => {
+  //       // podrías usar tu notification.service aquí
+  //       console.error('Error al transcribir');
+  //     },
+  //     complete: () => {
+  //       this.isTranscribing.set(false);
+  //     },
+  //   });
+  // }
 }

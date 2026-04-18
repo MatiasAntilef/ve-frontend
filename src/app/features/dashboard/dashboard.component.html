@@ -1,5 +1,4 @@
 <section class="min-h-[calc(100vh-7rem)] rounded-box bg-base-200/60 p-4 md:p-8">
-  <p>Total videos: {{ videos().length }}</p>
   <div class="mx-auto max-w-3xl">
     <article class="card border border-base-300 bg-base-100 shadow-xl">
       <div class="card-body gap-6">
@@ -89,7 +88,7 @@
           </div>
         </div>
 
-        @if (loading()) {
+        @if (isLoading()) {
           <div class="flex items-center gap-2 text-sm text-base-content/70">
             <span class="loading loading-spinner loading-sm"></span>
             Cargando videos...
@@ -134,7 +133,7 @@
               </div>
             </div>
           </div>
-        } @else if (videos().length > 0) {
+        } @else if (videos().videos.length > 0) {
           <div class="overflow-x-auto rounded-box border border-base-300">
             <table class="table table-zebra">
               <thead>
@@ -146,7 +145,7 @@
                 </tr>
               </thead>
               <tbody>
-                @for (video of videos(); track video.video_id) {
+                @for (video of videos().videos; track video.video_id) {
                   <tr>
                     <td>
                       <button

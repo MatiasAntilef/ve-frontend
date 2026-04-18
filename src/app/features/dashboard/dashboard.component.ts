@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationService } from '@core/services/notification/notification.service';
 import { VideoService } from '@core/services/videos/api/video.service';
-import { VideoInterface } from '@core/services/videos/interfaces/video.interface';
+import { ResVideoListInterface } from '@core/services/videos/interfaces/video.interface';
 import { formatDate } from '@core/utils/format-date.util';
 
 @Component({
@@ -24,23 +24,22 @@ export class DashboardComponent {
   selectedFile: File | null = null;
   isUploading = false;
 
-  videos = signal<VideoInterface[]>([]);
-  loading = signal<boolean>(true);
+  videos = signal<ResVideoListInterface>({ videos: [] });
+  isLoading = signal<boolean>(true);
   error = signal<string | null>(null);
 
   async load() {
-    this.loading.set(true);
+    this.isLoading.set(true);
     this.error.set(null);
 
     try {
       const videos = await this.videoService.loadVideos();
       this.videos.set(videos);
-      console.log(videos);
     } catch (err) {
       this.error.set('No se pudieron cargar los videos');
       this.notification.error('Error cargando videos');
     } finally {
-      this.loading.set(false);
+      this.isLoading.set(false);
     }
   }
 
