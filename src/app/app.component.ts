@@ -7,7 +7,6 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
   selector: 'app-root',
   imports: [RouterOutlet, ToastGlobalComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
   protected readonly title = signal('video-editor-frontend');
