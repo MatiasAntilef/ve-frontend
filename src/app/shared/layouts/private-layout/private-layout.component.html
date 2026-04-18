@@ -1,30 +1,143 @@
-<div class="navbar bg-base-100 shadow-sm">
-  <div class="flex-1">
-    <a class="btn btn-ghost text-xl">Demo</a>
-  </div>
-  <div class="flex-none">
-    <div class="dropdown dropdown-end">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-        <div class="w-10 rounded-full">
-          <img
-            alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-          />
+<div class="min-h-screen bg-base-200/60">
+  <header class="sticky top-0 z-40 border-b border-base-300/60 bg-base-100/85 backdrop-blur">
+    <div class="navbar mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex-1">
+        <a
+          routerLink="/dashboard"
+          class="flex items-center gap-3 rounded-xl px-2 py-1 transition hover:bg-base-200"
+        >
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-content shadow-sm"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 10l4.55-2.27A1 1 0 0 1 21 8.62v6.76a1 1 0 0 1-1.45.89L15 14"
+              />
+              <rect x="3" y="6" width="12" height="12" rx="2" ry="2" />
+            </svg>
+          </div>
+
+          <div class="leading-tight">
+            <p class="text-sm font-semibold text-base-content/70">AWS Video App</p>
+            <h1 class="text-base font-bold tracking-tight text-base-content">Dashboard</h1>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a routerLink="/dashboard" class="btn btn-ghost btn-sm hidden md:inline-flex"> Inicio </a>
+
+        <a routerLink="/profile" class="btn btn-ghost btn-sm hidden md:inline-flex"> Perfil </a>
+
+        <div class="dropdown dropdown-end">
+          <button
+            tabindex="0"
+            type="button"
+            class="btn btn-ghost h-auto min-h-0 rounded-2xl px-2 py-2"
+          >
+            <div class="flex items-center gap-3">
+              <div class="avatar placeholder">
+                <div
+                  class="w-10 rounded-2xl bg-primary text-primary-content flex items-center justify-center"
+                >
+                  <span class="text-sm font-semibold">M</span>
+                </div>
+              </div>
+
+              <div class="hidden text-left sm:block">
+                <p class="text-sm font-semibold leading-4">Mi cuenta</p>
+                <p class="text-xs text-base-content/60">Sesión activa</p>
+              </div>
+            </div>
+          </button>
+
+          <ul
+            tabindex="-1"
+            class="menu dropdown-content `z-[50]` mt-3 w-64 rounded-2xl border border-base-300 bg-base-100 p-2 shadow-xl"
+          >
+            <li class="menu-title px-3 pb-2">
+              <span>Cuenta</span>
+            </li>
+
+            <li>
+              <a routerLink="/profile" class="rounded-xl">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20 21a8 8 0 1 0-16 0" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                Perfil
+              </a>
+            </li>
+
+            <li>
+              <a routerLink="/dashboard" class="rounded-xl">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                >
+                  <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                  <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                  <rect x="14" y="14" width="7" height="7" rx="1.5" />
+                  <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                </svg>
+                Dashboard
+              </a>
+            </li>
+
+            <div class="my-2 h-px bg-base-300"></div>
+
+            <li>
+              <button
+                type="button"
+                class="rounded-xl text-error hover:bg-error/10 hover:text-error"
+                (click)="logoff()"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+                  />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 17l5-5-5-5" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 12H9" />
+                </svg>
+                Cerrar sesión
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
-      <ul
-        tabindex="-1"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-      >
-        <li>
-          <a routerLink="/profile" class="justify-between"> Profile </a>
-        </li>
-        <li><button (click)="logoff()">Cerrar sesión</button></li>
-      </ul>
     </div>
-  </div>
-</div>
+  </header>
 
-<div>
-  <router-outlet></router-outlet>
+  <main class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <router-outlet></router-outlet>
+  </main>
 </div>

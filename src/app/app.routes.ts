@@ -31,6 +31,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/profile/profile.component').then((m) => m.ProfileComponent),
       },
+      {
+        path: 'transcribe/:videoId',
+        loadComponent: () =>
+          import('./features/transcribe/transcribe.component').then((m) => m.TranscribeComponent),
+      },
     ],
   },
   //others

@@ -1,0 +1,35 @@
+<section class="space-y-6 p-6">
+  <h1 class="text-2xl font-bold">Transcribe video: {{ videoId }}</h1>
+
+  @if (isLoading) {
+    <p class="text-base-content/70">Cargando video...</p>
+  } @else if (errorMessage) {
+    <div class="alert alert-errr">
+      <span>{{ errorMessage }}</span>
+    </div>
+  } @else if (videoData) {
+    <div class="card border border-base-300 bg-base-100 shadow">
+      <div class="card-body gap-4">
+        @if (resolvedVideoUrl) {
+          <video class="w-full rounded-lg" controls autoplay targets="_blank">
+            <source [src]="resolvedVideoUrl" type="video/mp4" />
+            Tu navegador no soporta video
+          </video>
+        } @else {
+          <div class="rounded-box border border-dashed border-base-300 p-4 text-base-content/70">
+            El backend no devolvio videoUrl para este video.
+          </div>
+        }
+
+        <div class="grid gap-2 text-sm md:grid-cols-2">
+          <p><strong>Nombre:</strong> {{ videoData.video_name || '-' }}</p>
+          <p><strong>Estado:</strong> {{ videoData.status || '-' }}</p>
+          <p><strong>Transcrito:</strong> {{ videoData.transcribe_status ? 'Si' : 'No' }}</p>
+          <p><strong>Creado:</strong> {{ formatDate(videoData.created_at) }}</p>
+          <p><strong>Duracion:</strong> {{ videoData.duration ?? '-' }}</p>
+          <p><strong>Video ID:</strong> {{ videoData.video_id || videoId }}</p>
+        </div>
+      </div>
+    </div>
+  }
+</section>

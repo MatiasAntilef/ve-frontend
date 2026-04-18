@@ -1,12 +1,13 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
-import { Observable, tap } from 'rxjs';
+import { firstValueFrom, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly oidcSecurityService = inject(OidcSecurityService);
+
   private readonly authState = signal({
     isAuthenticated: false,
     userData: null as unknown,
@@ -18,9 +19,7 @@ export class AuthService {
   readonly accessToken = computed(() => this.authState().accessToken);
 
   async getToken(): Promise<string> {
-    let token = '';
-    this.oidcSecurityService.getAccessToken().subscribe((t) => (token = t));
-    return token;
+    return firstValueFrom(this.oidcSecurityService.getAccessToken());
   }
 
   initAuth(): Observable<LoginResponse> {
