@@ -1,1 +1,19 @@
-<p>pricing works!</p>
+<h1>Listado de paises</h1>
+@if (cargando()) {
+  <p>cargando...</p>
+}
+@if (error()) {
+  <p>error: {{ error() }}</p>
+}
+@if (!cargando() && !error()) {
+  <div>
+    @for (pais of paises(); track pais.name.common) {
+      <div>
+        <h2>{{ pais.name.common }}</h2>
+        <p>Capital: {{ pais.capital }}</p>
+        <p>Poblacion: {{ pais.population }}</p>
+        <img src="{{ pais.flags.png }}" alt="{{ pais.name }}" />
+      </div>
+    }
+  </div>
+}

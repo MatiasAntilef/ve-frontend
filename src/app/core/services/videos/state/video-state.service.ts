@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 @Injectable({
   providedIn: 'root',
 })
-export class VideosStateService {
+export class VideoStateService {
   private videosSubject = new BehaviorSubject<any[]>([]);
   videos$ = this.videosSubject.asObservable();
 

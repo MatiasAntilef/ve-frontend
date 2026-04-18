@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ToastGlobalComponent } from './toast-global.component';
+
+describe('ToastGlobalComponent', () => {
+  let component: ToastGlobalComponent;
+  let fixture: ComponentFixture<ToastGlobalComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ToastGlobalComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ToastGlobalComponent);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
