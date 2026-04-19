@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
+import { AuthService } from '@core/services/auth/api/auth.service';
 
 @Component({
   selector: 'app-public-layout',
@@ -7,6 +8,7 @@ import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
   templateUrl: './public-layout.component.html',
 })
 export class PublicLayoutComponent {
+  constructor(private authService: AuthService) {}
   readonly isMobileMenuOpen = signal(false);
 
   toggleMobileMenu(): void {
@@ -15,5 +17,9 @@ export class PublicLayoutComponent {
 
   closeMobileMenu(): void {
     this.isMobileMenuOpen.set(false);
+  }
+
+  login(): void {
+    this.authService.login();
   }
 }

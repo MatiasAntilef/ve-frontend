@@ -4,18 +4,13 @@ import { autoLoginPartialRoutesGuard } from 'angular-auth-oidc-client';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'app',
-    pathMatch: 'full',
-  },
-  {
-    path: '',
     loadComponent: () =>
       import('@shared/layouts/public-layout/public-layout.component').then(
         (m) => m.PublicLayoutComponent,
       ),
     children: [
       {
-        path: '',
+        path: 'landing',
         loadComponent: () =>
           import('./features/marketing/landing/landing.component').then((m) => m.LandingComponent),
       },
@@ -62,10 +57,6 @@ export const routes: Routes = [
     path: 'forbidden',
     loadComponent: () =>
       import('./features/auth/forbidden/forbidden.component').then((m) => m.ForbiddenComponent),
-  },
-  {
-    path: 'auth',
-    loadComponent: () => import('./features/auth/auth.component').then((m) => m.AuthComponent),
   },
   {
     path: '**',
