@@ -57,10 +57,8 @@ export class VideoService {
   }
 
   async loadVideos(): Promise<ResVideoListInterface> {
-    return await firstValueFrom(this.http.get<ResVideoListInterface>('/default.json'));
-    // return await firstValueFrom(
-    //   this.http.get<ResVideoListInterface>(`${environment.api}/videos`),
-    // );
+    // return await firstValueFrom(this.http.get<ResVideoListInterface>('/default.json'));
+    return await firstValueFrom(this.http.get<ResVideoListInterface>(`${environment.api}/videos`));
   }
 
   async getVideo(videoId: string): Promise<VideoDetailInterface> {

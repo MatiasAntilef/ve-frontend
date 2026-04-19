@@ -3,10 +3,7 @@ import { autoLoginPartialRoutesGuard } from 'angular-auth-oidc-client';
 
 export const routes: Routes = [
   //public
-  {
-    path: '',
-    loadChildren: () => import('./features/marketing/public.routes').then((m) => m.PUBLIC_ROUTES),
-  },
+
   //private
   {
     path: '',
@@ -16,6 +13,11 @@ export const routes: Routes = [
         (m) => m.PrivateLayoutComponent,
       ),
     children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'dashboard',
+      },
       {
         path: 'dashboard',
         loadComponent: () =>
@@ -37,6 +39,10 @@ export const routes: Routes = [
           import('./features/transcribe/transcribe.component').then((m) => m.TranscribeComponent),
       },
     ],
+  },
+  {
+    path: '',
+    loadChildren: () => import('./features/marketing/public.routes').then((m) => m.PUBLIC_ROUTES),
   },
   //others
   {

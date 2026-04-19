@@ -10,10 +10,25 @@
     @if (videoDetail()) {
       <div
         class="badge badge-lg"
-        [class.badge-success]="videoDetail()!.transcribeStatus"
-        [class.badge-warning]="!videoDetail()!.transcribeStatus"
+        [class.badge-success]="videoDetail()!.transcribeStatus === 'COMPLETED'"
+        [class.badge-warning]="videoDetail()!.transcribeStatus === 'NOT_STARTED'"
+        [class.badge-info]="videoDetail()!.transcribeStatus === 'IN_PROGRESS'"
+        [class.badge-error]="videoDetail()!.transcribeStatus === 'FAILED'"
       >
-        {{ videoDetail()!.transcribeStatus ? 'Transcrito' : 'Pendiente' }}
+        @switch (videoDetail()!.transcribeStatus) {
+          @case ('NOT_STARTED') {
+            Pendiente
+          }
+          @case ('IN_PROGRESS') {
+            En progreso
+          }
+          @case ('COMPLETED') {
+            Transcrito
+          }
+          @case ('FAILED') {
+            Falló
+          }
+        }
       </div>
     }
   </div>
@@ -85,10 +100,25 @@
             <div class="badge badge-outline">AWS Project</div>
             <div
               class="badge"
-              [class.badge-success]="videoDetail()!.transcribeStatus"
-              [class.badge-warning]="!videoDetail()!.transcribeStatus"
+              [class.badge-success]="videoDetail()!.transcribeStatus === 'COMPLETED'"
+              [class.badge-warning]="videoDetail()!.transcribeStatus === 'NOT_STARTED'"
+              [class.badge-info]="videoDetail()!.transcribeStatus === 'IN_PROGRESS'"
+              [class.badge-error]="videoDetail()!.transcribeStatus === 'FAILED'"
             >
-              {{ videoDetail()!.transcribeStatus ? 'Procesado' : 'Sin transcribir' }}
+              @switch (videoDetail()!.transcribeStatus) {
+                @case ('NOT_STARTED') {
+                  Sin transcribir
+                }
+                @case ('IN_PROGRESS') {
+                  Transcribiendo
+                }
+                @case ('COMPLETED') {
+                  Procesado
+                }
+                @case ('FAILED') {
+                  Error en transcripción
+                }
+              }
             </div>
           </div>
         </div>
@@ -128,7 +158,20 @@
               Estado
             </p>
             <p class="font-medium">
-              {{ videoDetail()!.transcribeStatus ? 'Sí, transcrito' : 'No transcrito' }}
+              @switch (videoDetail()!.transcribeStatus) {
+                @case ('NOT_STARTED') {
+                  No transcrito
+                }
+                @case ('IN_PROGRESS') {
+                  Transcribiendo
+                }
+                @case ('COMPLETED') {
+                  Sí, transcrito
+                }
+                @case ('FAILED') {
+                  Falló
+                }
+              }
             </p>
           </div>
 
@@ -164,19 +207,111 @@
       Inicia la transcripción del video usando AWS (Transcribe + S3).
     </div>
 
-    <!-- <button
+    <button
       class="btn btn-primary gap-2"
-      (click)="onTranscribe()"
-      [disabled]="isTranscribing() || videoDetail()!.transcribeStatus"
+      (click)="transcriptionVideo()"
+      [disabled]="
+        currentTranscribeStatus === 'IN_PROGRESS' || currentTranscribeStatus === 'COMPLETED'
+      "
     >
-      @if (isTranscribing()) {
+      @if (currentTranscribeStatus === 'IN_PROGRESS') {
         <span class="loading loading-spinner loading-sm"></span>
-        Transcribiendo...
-      } @else if (videoDetail()!.transcribeStatus) {
+        En progreso...
+      } @else if (currentTranscribeStatus === 'COMPLETED') {
         ✔ Ya transcrito
+      } @else if (currentTranscribeStatus === 'FAILED') {
+        🔁 Reintentar transcripción
       } @else {
         🎙️ Transcribir
       }
-    </button> -->
+    </button>
+    <div class="drawer drawer-end">
+      <input id="transcript-drawer" type="checkbox" class="drawer-toggle" />
+
+      <div class="drawer-content">
+        <div class="flex flex-wrap items-center gap-3">
+          @if (transcriptText() || currentTranscribeStatus === 'IN_PROGRESS') {
+            <label for="transcript-drawer" class="btn btn-outline btn-secondary gap-2">
+              Ver transcripción
+            </label>
+          }
+
+          @if (currentTranscribeStatus === 'COMPLETED') {
+            <div class="badge badge-success badge-outline">Lista</div>
+          } @else if (currentTranscribeStatus === 'IN_PROGRESS') {
+            <div class="badge badge-info gap-2">
+              <span class="loading loading-spinner loading-xs"></span>
+              Procesando
+            </div>
+          } @else if (currentTranscribeStatus === 'FAILED') {
+            <div class="badge badge-error badge-outline">Falló</div>
+          }
+        </div>
+      </div>
+
+      <div class="drawer-side z-40">
+        <label for="transcript-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+
+        <aside class="min-h-full w-full max-w-xl border-l border-base-300 bg-base-100">
+          <div class="flex h-full flex-col">
+            <div class="border-b border-base-300 bg-base-100/95 px-5 py-4 backdrop-blur">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="text-lg font-semibold">Transcripción</h3>
+                  <p class="text-sm text-base-content/60">Revisa el texto generado del video.</p>
+                </div>
+
+                <label for="transcript-drawer" class="btn btn-sm btn-ghost btn-circle"> ✕ </label>
+              </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-5">
+              @if (currentTranscribeStatus === 'IN_PROGRESS') {
+                <div
+                  class="flex h-full min-h-52 flex-col items-center justify-center gap-4 text-center"
+                >
+                  <span class="loading loading-spinner loading-lg"></span>
+                  <div>
+                    <p class="font-medium">Generando transcripción...</p>
+                    <p class="text-sm text-base-content/60">
+                      Esto puede tardar un poco según la duración del video.
+                    </p>
+                  </div>
+                </div>
+              } @else if (currentTranscribeStatus === 'FAILED') {
+                <div class="alert alert-error">
+                  <span>No se pudo generar la transcripción.</span>
+                </div>
+              } @else if (transcriptText()) {
+                <div class="space-y-4">
+                  <div class="rounded-2xl border border-base-300 bg-base-200/40 p-4">
+                    <div class="mb-2 flex items-center justify-between gap-3">
+                      <p class="text-sm font-medium">Texto transcrito</p>
+                      <button class="btn btn-xs btn-ghost" type="button" (click)="copyTranscript()">
+                        Copiar
+                      </button>
+                    </div>
+
+                    <p class="whitespace-pre-wrap text-sm leading-7 text-base-content/90">
+                      {{ transcriptText() }}
+                    </p>
+                  </div>
+                </div>
+              } @else {
+                <div
+                  class="flex h-full min-h-52 flex-col items-center justify-center gap-3 text-center"
+                >
+                  <div class="text-4xl"></div>
+                  <div>
+                    <p class="font-medium">Aún no hay transcripción</p>
+                    <p class="text-sm text-base-content/60">Cuando esté lista, aparecerá aquí.</p>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
   </div>
 </section>

@@ -3,7 +3,8 @@ export interface VideoListInterface {
   video_name: string;
   created_at: string;
   thumbnail_key: string | null;
-  transcribe_status: boolean;
+  transcribe_status: 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED' | 'FAILED';
+  transcription_job_name: string | null;
   status: string;
   transcript_key: string | null;
   video_key: string;
