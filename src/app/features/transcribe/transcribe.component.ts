@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NotificationService } from '@core/services/notification/notification.service';
+import { NotificationService } from '@core/utils/notification/notification.service';
 import { VideoService } from '@core/services/videos/api/video.service';
-import { VideoDetailInterface } from '@core/services/videos/interfaces/video-detail.interface';
+import { VideoDetailInterface } from '@core/services/videos/models/video-detail.interface';
 
 @Component({
   selector: 'app-transcribe',

@@ -3,7 +3,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { AuthService } from '@core/services/auth/auth.service';
+import { AuthService } from '@core/services/auth/api/auth.service';
 import { SKIP_AUTH } from './skip-auth.token';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
