@@ -10,9 +10,9 @@ El objetivo del proyecto es manejar **grandes volúmenes de datos y picos de tr�
 - 🔐 Autenticación de usuarios con AWS Cognito  
 - ☁️ Subida de archivos a S3  
 - 🎙️ Transcripción automática de audio  
-- 🔊 Conversión de texto a voz  
-- ⚡ Procesamiento asíncrono con colas (SQS) *(en progreso)*  
-- 📈 Arquitectura preparada para picos de tráfico  
+- 🔊 Conversión de texto a voz  *(en cola)*
+- ⚡ Procesamiento asíncrono con colas (SQS) *(en cola)*  
+- 📈 Arquitectura preparada para picos de tráfico
 
 ---
 
@@ -24,9 +24,9 @@ El proyecto sigue un enfoque **serverless** usando servicios de AWS:
 - **Auth**: AWS Cognito  
 - **Storage**: AWS S3  
 - **Compute**: AWS Lambda  
-- **Transcripción**: AWS Transcribe *(o Whisper como alternativa)*  
-- **Text-to-Speech**: AWS Polly  
-- **Mensajería**: AWS SQS  
+- **Transcripción**: AWS Transcribe 
+- **Text-to-Speech**: AWS Polly *(en cola)* 
+- **Mensajería**: AWS SQS *(en cola)* 
 
 ---
 
