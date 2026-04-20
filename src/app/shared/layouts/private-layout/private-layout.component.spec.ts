@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 
 import { PrivateLayoutComponent } from './private-layout.component';
-import { AuthService } from '@core/services/auth/api/auth.service';
+// import { AuthService } from '@core/services/auth/api/auth.service';
 
 describe('PrivateLayoutComponent', () => {
   let component: PrivateLayoutComponent;
@@ -15,7 +15,7 @@ describe('PrivateLayoutComponent', () => {
       providers: [
         provideRouter([]),
         {
-          provide: AuthService,
+          // provide: AuthService,
           useValue: {
             logoff: () => of(null),
           },

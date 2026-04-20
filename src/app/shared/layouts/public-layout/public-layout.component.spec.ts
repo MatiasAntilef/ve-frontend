@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { PublicLayoutComponent } from './public-layout.component';
-import { AuthService } from '@core/services/auth/api/auth.service';
+// import { AuthService } from '@core/services/auth/api/auth.service';
 
 describe('PublicLayoutComponent', () => {
   let component: PublicLayoutComponent;
@@ -14,7 +14,7 @@ describe('PublicLayoutComponent', () => {
       providers: [
         provideRouter([]),
         {
-          provide: AuthService,
+          // provide: AuthService,
           useValue: {
             login: () => {},
           },
