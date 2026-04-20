@@ -1,59 +1,60 @@
-# VideoEditorFrontend
+# 🎬 Serverless Video Processing App (MVP)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+Aplicación web para subir videos y procesarlos en la nube usando una arquitectura **serverless en AWS**.
 
-## Development server
+## 🚀 Objetivo
 
-To start a local development server, run:
+Permitir a los usuarios:
 
-```bash
-ng serve
-```
+- Subir videos
+- Transcribir audio automáticamente
+- (Próximamente) generar doblaje con IA
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Todo de forma **asíncrona, escalable y desacoplada**.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🧠 Arquitectura
 
-```bash
-ng generate component component-name
-```
+El sistema está basado en un enfoque de **jobs + colas**:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+1. El usuario crea un video (job)
+2. El frontend sube el archivo directamente a S3
+3. Se envían tareas a una cola (SQS)
+4. Lambdas procesan:
+   - Transcripción (AWS Transcribe)
+   - (Futuro) Doblaje (AWS Polly)
+5. DynamoDB guarda el estado del proceso
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## 🧩 Stack
 
-To build the project run:
+### Frontend
+- Angular
+- Tailwind / UI components
+- Auth con AWS Cognito
 
-```bash
-ng build
-```
+### Backend (Serverless)
+- AWS Lambda
+- API Gateway
+- DynamoDB
+- S3 (storage)
+- SQS (colas)
+- AWS Transcribe
+- (Próximamente) AWS Polly
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### DevOps
+- CI/CD con GitHub Actions
+- Deploy a S3 (frontend)
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## 🔄 Flujo principal
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```text
+Frontend → API (crear job)
+Frontend → S3 (upload directo)
+SQS → Lambda (procesamiento)
+Lambda → DynamoDB (estado)
+Frontend → API (consulta estado)
