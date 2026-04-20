@@ -1,7 +1,11 @@
 import { Routes } from '@angular/router';
-import { autoLoginPartialRoutesGuard } from 'angular-auth-oidc-client';
 
 export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'app',
+    pathMatch: 'full',
+  },
   {
     path: '',
     loadComponent: () =>
@@ -18,31 +22,29 @@ export const routes: Routes = [
   },
   {
     path: 'app',
-    canActivate: [autoLoginPartialRoutesGuard],
     loadComponent: () =>
       import('./shared/layouts/private-layout/private-layout.component').then(
         (m) => m.PrivateLayoutComponent,
       ),
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
         path: 'dashboard',
         loadComponent: () =>
           import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent),
       },
       {
-        path: 'editor',
-        loadComponent: () =>
-          import('./features/editor/editor.component').then((m) => m.EditorComponent),
+        path: 'edit/:id',
+        loadComponent: () => import('./features/edit/edit.component').then((m) => m.EditComponent),
       },
       {
-        path: 'profile',
+        path: 'account',
         loadComponent: () =>
-          import('./features/profile/profile.component').then((m) => m.ProfileComponent),
-      },
-      {
-        path: 'transcribe/:videoId',
-        loadComponent: () =>
-          import('./features/transcribe/transcribe.component').then((m) => m.TranscribeComponent),
+          import('./features/account/account.component').then((m) => m.AccountComponent),
       },
     ],
   },

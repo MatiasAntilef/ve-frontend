@@ -1,7 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastGlobalComponent } from '@shared/components/notification-global/toast-global.component';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +8,9 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  constructor() {
-    this.oidcSecurityService.checkAuth();
-  }
+  // constructor() {
+  //   this.oidcSecurityService.checkAuth();
+  // }
   protected readonly title = signal('video-editor-frontend');
-  private readonly oidcSecurityService = inject(OidcSecurityService);
+  // private readonly oidcSecurityService = inject(OidcSecurityService);
 }

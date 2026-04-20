@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { ICreateVideoOptions, IResCreateVideo } from '../models/create-video.model';
 import { IResListVideos } from '../models/get-videos.model';
 import { IResVideoDetail } from '../models/get-video-by-id.model';
+import { IPostVideoOptions, IResPostVideo } from '../models/post-video.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +12,9 @@ export class VideoService {
   constructor() {}
   private http = inject(HttpClient);
 
-  createVideo(file: File, options: ICreateVideoOptions): Promise<IResCreateVideo> {
+  postVideo(file: File, options: IPostVideoOptions): Promise<IResPostVideo> {
     return firstValueFrom(
-      this.http.post<IResCreateVideo>('/videos', {
+      this.http.post<IResPostVideo>('/videos', {
         fileName: file.name,
         fileType: file.type,
         fileSize: file.size,
@@ -26,7 +26,7 @@ export class VideoService {
 
   getVideos(nextToken?: string): Promise<IResListVideos> {
     return firstValueFrom(
-      this.http.get<IResListVideos>('/videos', {
+      this.http.get<IResListVideos>('/default.json', {
         params: nextToken ? { nextToken } : {},
       }),
     );

@@ -1,16 +1,16 @@
-import { PassedInitialConfig } from 'angular-auth-oidc-client';
-import { environment } from '@environments/environment.development';
+// import { PassedInitialConfig } from 'angular-auth-oidc-client';
+// import { environment } from '@environments/environment.development';
 
-export const authConfig: PassedInitialConfig = {
-  config: {
-    authority: environment.auth.authority,
-    redirectUrl: environment.auth.redirectUrl,
-    postLogoutRedirectUri: environment.auth.postLogoutRedirectUri,
-    clientId: environment.auth.clientId,
-    scope: environment.auth.scope,
-    responseType: 'code',
-    silentRenew: true,
-    useRefreshToken: true,
-    renewTimeBeforeTokenExpiresInSeconds: 30,
-  },
-};
+// export const authConfig: PassedInitialConfig = {
+//   config: {
+//     authority: environment.auth.authority,
+//     redirectUrl: environment.auth.redirectUrl,
+//     postLogoutRedirectUri: environment.auth.postLogoutRedirectUri,
+//     clientId: environment.auth.clientId,
+//     scope: environment.auth.scope,
+//     responseType: 'code',
+//     silentRenew: true,
+//     useRefreshToken: true,
+//     renewTimeBeforeTokenExpiresInSeconds: 30,
+//   },
+// };

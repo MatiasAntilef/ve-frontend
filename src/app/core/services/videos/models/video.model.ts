@@ -19,6 +19,7 @@ export interface IVideo {
   id: string;
   userId: string;
   fileName: string;
+  screenshot: string;
   s3Key: string;
   status: VideoStatus;
   transcriptionRequested: boolean;
