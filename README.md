@@ -5,13 +5,15 @@ El objetivo del proyecto es manejar **grandes volúmenes de datos y picos de tr�
 
 ---
 
+
+<img width="1413" height="897" alt="image" src="https://github.com/user-attachments/assets/8f026005-2a7b-44f3-9e1c-14a6ed180bc7" />
+
+
 ## 🚀 Features
 
 - 🔐 Autenticación de usuarios con AWS Cognito  
 - ☁️ Subida de archivos a S3  
 - 🎙️ Transcripción automática de audio  
-- 🔊 Conversión de texto a voz  *(en cola)*
-- ⚡ Procesamiento asíncrono con colas (SQS) *(en cola)*  
 - 📈 Arquitectura preparada para picos de tráfico
 
 ---
@@ -24,9 +26,7 @@ El proyecto sigue un enfoque **serverless** usando servicios de AWS:
 - **Auth**: AWS Cognito  
 - **Storage**: AWS S3  
 - **Compute**: AWS Lambda  
-- **Transcripción**: AWS Transcribe 
-- **Text-to-Speech**: AWS Polly *(en cola)* 
-- **Mensajería**: AWS SQS *(en cola)* 
+- **Transcripción**: AWS Transcribe
 
 ---
 
@@ -51,27 +51,5 @@ Esta app simula un escenario real donde:
 - Storage: S3  
 
 ---
-
-## ⚙️ Configuración
-
-Crear archivo de entorno:
-
-```ts
-export const environment = {
-  production: true,
-  auth: {
-    authority: 'YOUR_COGNITO_AUTHORITY',
-    clientId: 'YOUR_CLIENT_ID',
-    scope: 'openid profile email',
-    redirectUrl: 'YOUR_REDIRECT_URL',
-    postLogoutRedirectUri: 'YOUR_LOGOUT_REDIRECT_URL',
-  },
-};
-
-
-git clone https://github.com/tu-usuario/tu-repo.git
-cd ve-frontend
-pnpm install
-ng serve
 
 
