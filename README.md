@@ -1,59 +1,55 @@
-# VideoEditorFrontend
+# 🎬 Video Editor SaaS (Serverless)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+Aplicación web para **subir, procesar y transcribir audio/video** usando arquitectura **serverless en AWS**.  
+El objetivo del proyecto es manejar **grandes volúmenes de datos y picos de tráfico** de forma escalable.
 
-## Development server
+---
 
-To start a local development server, run:
 
-```bash
-ng serve
-```
+<img width="1413" height="897" alt="image" src="https://github.com/user-attachments/assets/8f026005-2a7b-44f3-9e1c-14a6ed180bc7" />
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+## 🚀 Features
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- 🔐 Autenticación de usuarios con AWS Cognito  
+- ☁️ Subida de archivos a S3  
+- 🎙️ Transcripción automática de audio  
+- 📈 Arquitectura preparada para picos de tráfico
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🏗️ Arquitectura
 
-```bash
-ng generate --help
-```
+El proyecto sigue un enfoque **serverless** usando servicios de AWS:
 
-## Building
+- **Frontend**: Angular  
+- **Auth**: AWS Cognito  
+- **Storage**: AWS S3  
+- **Compute**: AWS Lambda  
+- **Transcripción**: AWS Transcribe
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## 🧠 ¿Qué problema resuelve?
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Esta app simula un escenario real donde:
 
-## Running unit tests
+- Muchos usuarios suben archivos simultáneamente  
+- Existen picos de tráfico impredecibles  
+- El procesamiento de audio/video es costoso  
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+➡️ Se resuelve usando arquitectura desacoplada, serverless y procesamiento en segundo plano.
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
+## 🛠️ Tecnologías
 
-For end-to-end (e2e) testing, run:
+- Frontend: Angular + TailwindCSS  
+- Backend: AWS Lambda (Node.js)  
+- Cloud: AWS  
+- CI/CD: GitHub Actions  
+- Storage: S3  
 
-```bash
-ng e2e
-```
+---
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
